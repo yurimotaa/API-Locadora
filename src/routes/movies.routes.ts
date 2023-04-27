@@ -7,6 +7,7 @@ import {
 import {
   createMovieController,
   deleteMovieController,
+  getAllMoviesController,
   updateMovieController,
 } from "../controllers/movies.controllers";
 import checkNameExistsMiddleware from "../middlewares/checkNameExists.middleware";
@@ -20,7 +21,7 @@ moviesRoutes.post(
   checkNameExistsMiddleware,
   createMovieController
 );
-moviesRoutes.get("");
+moviesRoutes.get("", getAllMoviesController);
 moviesRoutes.patch(
   "/:id",
   checkBodyValidationMiddleware(updateMovieSchema),

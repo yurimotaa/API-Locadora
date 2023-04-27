@@ -13,4 +13,17 @@ type TMovieResponse = z.infer<typeof movieSchema>;
 
 type TMovieUpdate = z.infer<typeof updateMovieSchema>;
 
-export { TMovie, TMovieRequest, TMovieResponse, TMovieUpdate };
+interface TMoviesPagination {
+  prevPage: string | null;
+  nextPage: string | null;
+  count: number;
+  data: TMovie;
+}
+
+export {
+  TMovie,
+  TMovieRequest,
+  TMovieResponse,
+  TMovieUpdate,
+  TMoviesPagination,
+};
