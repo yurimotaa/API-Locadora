@@ -1,15 +1,8 @@
 import { Repository } from "typeorm";
 import { Movie } from "../entities";
 import { AppDataSource } from "../data-source";
-import {
-  TMovieResponse,
-  TMoviesPagination,
-} from "../interfaces/movies.interfaces";
-import {
-  getAllMoviesSchema,
-  moviesSchema,
-  responseMovieSchema,
-} from "../schemas/movies.schemas";
+import { TMovieResponse } from "../interfaces/movies.interfaces";
+import { moviesSchema } from "../schemas/movies.schemas";
 
 const getAllMoviesService = async (
   page: number,
@@ -24,6 +17,7 @@ const getAllMoviesService = async (
 
   if (!sort) {
     sort = "id";
+    order = "asc";
   } else if (sort !== "price" && sort !== "duration") {
     sort = "id";
   }
@@ -55,17 +49,22 @@ const getAllMoviesService = async (
       order: { [sort]: order },
     });
   } else if (page && !perPage) {
+    if (page <= 0) {
+      page = 1;
+    }
+    perPage = 5;
     movies = await movieRepository.find({
-      skip: (page - 1) * 5,
-      take: 5,
+      skip: (page - 1) * perPage,
+      take: perPage,
       order: { [sort]: order },
     });
   } else if (!page && perPage) {
     if (perPage <= 0 || perPage > 5) {
       perPage = 5;
     }
+    page = 1;
     movies = await movieRepository.find({
-      skip: 0,
+      skip: (page - 1) * perPage,
       take: perPage,
       order: { [sort]: order },
     });

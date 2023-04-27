@@ -24,8 +24,7 @@ const getAllMoviesController = async (
   const perPage: number | undefined = Number(request.query.perPage);
   const sort: string | undefined = request.query.sort?.toString() as string;
   const order: string | undefined = request.query.order?.toString() as string;
-  console.log(sort);
-  console.log(order);
+
   const movies = await getAllMoviesService(page, perPage, sort, order);
 
   return response.status(200).json(movies);
