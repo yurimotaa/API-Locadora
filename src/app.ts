@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "express-async-errors";
 import express, { Application } from "express";
 import moviesRoutes from "./routes/movies.routes";
 import { handleErrors } from "./error";
